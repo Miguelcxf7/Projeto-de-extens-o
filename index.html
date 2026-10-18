@@ -1,0 +1,465 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | Clube de Xadrez Cuiabá</title>
+
+    <style>
+        
+/* ESPAÇO DA LOGO NO CANTO SUPERIOR DIREITO */
+.logo-container {
+    position: absolute;
+    top: 25px;
+    right: 30px;
+    width: 110px;
+    height: 75px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #10243A;
+    border-radius: 12px;
+    padding: 8px;
+}
+
+.logo-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Permite posicionar a logo em relação à página */
+body {
+    position: relative;
+    padding-top: 115px;
+}
+
+@media (max-width: 700px) {
+    .logo-container {
+        top: 12px;
+        right: 15px;
+        width: 75px;
+        height: 52px;
+    }
+
+    body {
+        padding-top: 80px;
+    }
+}
+
+        /* CORES E CONFIGURAÇÕES GERAIS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --azul: #10243A;
+            --azul-claro: #193750;
+            --amarelo: #E8BE53;
+            --verde: #4D8B65;
+            --branco: #FFFFFF;
+            --cinza: #64748B;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background: var(--azul);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        /* CONTAINER PRINCIPAL */
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            width: 100%;
+            max-width: 950px;
+            min-height: 560px;
+            background: var(--branco);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px #00000035;
+        }
+
+        /* LADO ESQUERDO */
+        .painel {
+            background:
+                linear-gradient(145deg, #10243A, #193750);
+            color: var(--branco);
+            padding: 45px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .marca {
+            font-size: 14px;
+            letter-spacing: 2px;
+            color: var(--amarelo);
+            font-weight: bold;
+        }
+
+        .conteudo-painel {
+            margin: 45px 0;
+        }
+
+        .peca {
+            font-size: 76px;
+            color: var(--amarelo);
+            margin-bottom: 20px;
+        }
+
+        .painel h1 {
+            font-size: 34px;
+            line-height: 1.2;
+            margin-bottom: 18px;
+        }
+
+        .painel p {
+            color: #D5DFE8;
+            line-height: 1.7;
+        }
+
+        .rodape-painel {
+            font-size: 12px;
+            color: #B7C5D2;
+        }
+
+        /* LADO DIREITO: FORMULÁRIO */
+        .formulario {
+            padding: 55px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .formulario h2 {
+            color: var(--azul);
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .descricao {
+            color: var(--cinza);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .campo {
+            margin-bottom: 20px;
+        }
+
+        .campo label {
+            display: block;
+            color: var(--azul);
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 9px;
+        }
+
+        .campo input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #D6DEE7;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+
+        .campo input:focus {
+            border-color: var(--verde);
+            box-shadow: 0 0 0 3px #4D8B6520;
+        }
+
+        .opcoes {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            font-size: 12px;
+        }
+
+        .lembrar {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--cinza);
+        }
+
+        a {
+            color: var(--verde);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .botao {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            background: var(--amarelo);
+            color: var(--azul);
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .botao:hover {
+            background: #D9AC39;
+            transform: translateY(-1px);
+        }
+
+        .mensagem {
+            display: none;
+            padding: 12px;
+            margin-top: 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .mensagem.erro {
+            display: block;
+            background: #FDECEC;
+            color: #A32626;
+        }
+
+        .mensagem.info {
+            display: block;
+            background: #E8F4EC;
+            color: #245D38;
+        }
+
+        .cadastro {
+            text-align: center;
+            color: var(--cinza);
+            font-size: 13px;
+            margin-top: 25px;
+        }
+
+        /* ADAPTAÇÃO PARA CELULAR */
+        @media (max-width: 700px) {
+            body {
+                padding: 14px;
+            }
+
+            .container {
+                grid-template-columns: 1fr;
+                max-width: 430px;
+            }
+
+            .painel {
+                padding: 28px;
+            }
+
+            .conteudo-painel {
+                margin: 25px 0;
+            }
+
+            .peca {
+                font-size: 48px;
+                margin-bottom: 12px;
+            }
+
+            .painel h1 {
+                font-size: 25px;
+            }
+
+            .rodape-painel {
+                display: none;
+            }
+
+            .formulario {
+                padding: 35px 25px;
+            }
+
+            .formulario h2 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="logo-container">
+    <img src="img/logo.jpeg" alt="Logo do Clube de Xadrez">
+</div>
+
+    <main class="container">
+
+        <section class="painel">
+            <div class="marca">
+                CLUBE DE XADREZ GOIABEIRAS
+            </div>
+
+            <div class="conteudo-painel">
+                <div class="peca" aria-hidden="true">♚</div>
+
+                <h1>Sua próxima jogada começa aqui.</h1>
+
+                <p>
+                    Estratégia, conhecimento e comunidade.
+                    Faça parte do Clube de Xadrez de Cuiabá!
+                </p>
+            </div>
+
+            <div class="rodape-painel">
+                Clube de Xadrez de Cuiabá • Mato Grosso
+            </div>
+        </section>
+
+        <section class="formulario">
+            <h2>Bem-vindo!</h2>
+
+            <p class="descricao">
+                Entre na sua conta para continuar.
+            </p>
+
+            <form id="formLogin">
+
+                <div class="campo">
+                    <label for="email">E-mail</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="seuemail@exemplo.com"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="senha">Senha</label>
+
+                    <input
+                        type="password"
+                        id="senha"
+                        placeholder="Digite sua senha"
+                        autocomplete="current-password"
+                        minlength="6"
+                        required
+                    >
+                </div>
+
+                <div class="opcoes">
+                    <label class="lembrar">
+                        <input type="checkbox" id="lembrar">
+                        Lembrar de mim
+                    </label>
+
+                    <a href="#" id="recuperar">
+                        Esqueci a senha
+                    </a>
+                </div>
+
+                <button class="botao" type="submit">
+                    ENTRAR NA CONTA
+                </button>
+
+                <div
+                    id="mensagem"
+                    class="mensagem"
+                    role="status"
+                    aria-live="polite"
+                ></div>
+
+            </form>
+
+            <p class="cadastro">
+                Ainda não tem conta?
+                <a href="#" id="criarConta">Cadastre-se</a>
+            </p>
+        </section>
+
+    </main>
+
+    <script>
+  
+
+        const formLogin = document.getElementById("formLogin");
+        const email = document.getElementById("email");
+        const senha = document.getElementById("senha");
+        const mensagem = document.getElementById("mensagem");
+
+
+        function mostrarMensagem(texto, tipo) {
+            mensagem.textContent = texto;
+            mensagem.className = "mensagem " + tipo;
+        }
+
+        // EVENTO DO BOTÃO ENTRAR
+
+        formLogin.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const emailDigitado = email.value.trim();
+            const senhaDigitada = senha.value;
+
+            if (!emailDigitado || !senhaDigitada) {
+                mostrarMensagem(
+                    "Preencha todos os campos.",
+                    "erro"
+                );
+                return;
+            }
+
+            if (senhaDigitada.length < 6) {
+                mostrarMensagem(
+                    "A senha precisa ter pelo menos 6 caracteres.",
+                    "erro"
+                );
+                return;
+            }
+
+            mostrarMensagem(
+                "A interface está funcionando! Para entrar de verdade, precisamos conectar o login a um sistema de autenticação.",
+                "info"
+            );
+        });
+
+        // LINK DE RECUPERAÇÃO DE SENHA
+
+        document.getElementById("recuperar")
+            .addEventListener("click", function(event) {
+                event.preventDefault();
+
+                mostrarMensagem(
+                    "A recuperação de senha será implementada na próxima etapa.",
+                    "info"
+                );
+            });
+
+        // LINK DE CADASTRO
+
+        document.getElementById("criarConta")
+            .addEventListener("click", function(event) {
+                event.preventDefault();
+
+                mostrarMensagem(
+                    "A página de cadastro será criada na próxima etapa.",
+                    "info"
+                );
+            });
+    </script>
+
+</body>
+</html>
